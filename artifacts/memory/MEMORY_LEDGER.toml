@@ -1,0 +1,82 @@
+# Machine-readable persistent memory ledger.
+# Human-readable summaries remain in MEMORY_INDEX.md and category .md files.
+
+[metadata]
+module = "scaffold-memory"
+artifact_type = "memory-ledger"
+created_at = "2026-04-26T06:52:25+07:00"
+updated_at = "2026-04-26T21:42:16+07:00"
+runtime = "codex"
+owner = "founder"
+status = "in_progress"
+task_id = "TASK-20260425-001"
+schema_version = "1.0"
+resume_safe = true
+
+[[entries]]
+id = "MEM-PF-001"
+type = "project_fact"
+status = "verified"
+confidence = "high"
+created_at = "2026-04-26T06:43:16+07:00"
+updated_at = "2026-04-26T06:43:16+07:00"
+source = "artifacts/operations/WORKFLOW_STATE.md"
+review_after = "2026-05-26"
+summary = "Target contributor repository is not attached yet."
+
+[[entries]]
+id = "MEM-PF-002"
+type = "project_fact"
+status = "verified"
+confidence = "high"
+created_at = "2026-04-26T06:43:16+07:00"
+updated_at = "2026-04-26T06:43:16+07:00"
+source = "AGENTS.md"
+review_after = "2026-05-26"
+summary = "guardrails/ contains strict rules and artifacts/ contains state and outputs."
+
+[[entries]]
+id = "MEM-WF-001"
+type = "workflow_pattern"
+status = "verified"
+confidence = "high"
+created_at = "2026-04-26T06:43:16+07:00"
+updated_at = "2026-04-26T06:43:16+07:00"
+source = "COMMANDS.md"
+review_after = "2026-05-26"
+summary = "User-facing commands are centralized in root COMMANDS.md."
+
+[[entries]]
+id = "MEM-CON-001"
+type = "constraint"
+status = "verified"
+confidence = "high"
+created_at = "2026-04-26T06:43:16+07:00"
+updated_at = "2026-04-26T06:43:16+07:00"
+source = "artifacts/operations/PRE_CODING_GATE.md"
+review_after = "2026-05-26"
+summary = "Coding is blocked until target repo, intake, impact scan, allowed write paths, and founder approval exist."
+
+[[entries]]
+id = "MEM-TASK-001"
+type = "task_node"
+status = "verified"
+confidence = "high"
+created_at = "2026-04-26T06:43:16+07:00"
+updated_at = "2026-04-26T06:43:16+07:00"
+source = "artifacts/operations/CURRENT_TASK.md"
+review_after = "2026-05-26"
+summary = "Next real workflow action is read-only I1 Existing Project Intake after a target repo is attached."
+depends_on = ["target_repo_path_or_url"]
+blocks = ["I2 Impact Scan", "P1-P7", "B1-B3", "R1-R4"]
+
+[[entries]]
+id = "MEM-WF-002"
+type = "workflow_pattern"
+status = "verified"
+confidence = "high"
+created_at = "2026-04-26T21:42:16+07:00"
+updated_at = "2026-04-26T21:42:16+07:00"
+source = "guardrails/flutter/FLUTTER_DEVELOPMENT_POLICY.md"
+review_after = "2026-05-26"
+summary = "Existing Flutter/Dart projects are supported through Flutter-specific intake, policy, builder, and QA agents, but Flutter build remains blocked until intake, impact scan, allowed write paths, and approval exist."

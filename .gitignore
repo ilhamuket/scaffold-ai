@@ -1,0 +1,94 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Every target project is its own nested Git repository. The scaffold repository
+# must never stage, commit, or push target project files, including shared context.
+/development/*
+!/development/_project-template/
+!/development/_project-template/**
+
+# Same reasoning as /development/ above - these accumulate real per-project
+# content (deploy staging copies, PRD/BRD, bootstrap plans) that must never
+# ride along in the scaffold template. /deploy/lumirace in particular held a
+# real .env with production credentials and a compiled build tarball - found
+# and excluded before this repo's first push, not after.
+/deploy/*
+/dev-doc/lumirace/
+/plan/lumirace-bootstrap-plan.md
+
+# Live operational state for whatever project is currently being worked on
+# in this checkout (session log, task/workflow state, pre-coding gate,
+# agent activity log) - real, current, and still being appended to, so it
+# stays on disk untouched. Excluded from the template push for the same
+# reason as the paths above: it's this run's project state, not reusable
+# scaffold material for the next project to start from.
+# (plan-approval-checklists/README.md stays - generic, no real checklists
+# have actually been filed there.)
+/artifacts/operations/WORKFLOW_STATE.md
+/artifacts/operations/SESSION_LOG.md
+/artifacts/operations/CURRENT_TASK.md
+/artifacts/operations/CURRENT_PHASE.md
+/artifacts/operations/PRE_CODING_GATE.md
+/artifacts/operations/AGENT_ACTIVITY_LOG.md
+
+# Dependencies and package-manager runtime files
+node_modules/
+vendor/
+.pnpm-store/
+.npm/
+.yarn/
+
+# Build, coverage, and test runtime output
+dist/
+build/
+coverage/
+test-results/
+playwright-report/
+.playwright/
+.playwright-cli/
+/artifacts/qa/playwright/
+
+# Local databases, caches, and temporary files
+*.sqlite
+*.sqlite3
+*.db
+*.tmp
+*.temp
+*.cache
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Logs and crash output
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Per-developer Codex model availability overrides
+/.codex/model-routing.local.json
+
+# Graphify output is a reproducible local knowledge graph. Shared context stores
+# only its status and location so the next developer/agent can decide to refresh.
+/graphify-out/
+**/graphify-out/
+**/.graphify-state.json

@@ -1,0 +1,64 @@
+name: Validate Scaffold
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell scripts
+        run: |
+          bash -n scripts/check-skills.sh
+          bash -n scripts/sync-skills.sh
+          bash -n scripts/enable-scaffold-git-protection.sh
+          bash -n scripts/check-antigravity-skills.sh
+          bash -n scripts/check-claude-routing.sh
+          bash -n .githooks/pre-commit
+          bash -n .githooks/pre-push
+      - name: Validate target project Git isolation
+        run: |
+          git check-ignore -q development/example-project/src/app.ts
+          git check-ignore -q development/example-project/artifacts/shared/PROJECT_STATE.md
+          git check-ignore -q development/README.md
+          test -f .githooks/pre-commit
+          test -f .githooks/pre-push
+          test -f docs/DEVELOPMENT_WORKSPACE.md
+          test -f artifacts/operations/AGENT_ACTIVITY_LOG.md
+          test -f templates/agent_activity_log_template.md
+          test -f guardrails/development/AGENT_ACTIVITY_LOG_POLICY.md
+          grep -q 'model_source' templates/agent_activity_log_template.md
+          grep -q 'active_model_unavailable' guardrails/development/AGENT_ACTIVITY_LOG_POLICY.md
+      - name: Validate Codex model routing
+        run: |
+          node --check scripts/codex-route.mjs
+          bash -n scripts/codex-route.sh
+          node -e "JSON.parse(require('fs').readFileSync('.codex/model-routing.json', 'utf8'))"
+          node scripts/codex-route.mjs --dry-run --no-record "Fix typo" | grep -q '"model": "gpt-5.6-luna"'
+          node scripts/codex-route.mjs --dry-run --no-record "Fix isolated bug and add unit test" | grep -q '"model": "gpt-5.6-terra"'
+          node scripts/codex-route.mjs --dry-run --no-record "Review cross-module architecture refactor" | grep -q '"profile": "deep"'
+          node scripts/codex-route.mjs --dry-run --no-record "Audit security migration and race condition" | grep -q '"profile": "critical"'
+          node scripts/codex-route.mjs --dry-run --no-record --legacy-5-5 "Reproduce legacy baseline" | grep -q '"model": "gpt-5.5"'
+          node scripts/codex-route.mjs --dry-run --no-record --escalate-from fast --escalation-evidence artifacts/test/bug-log.md "Fix typo" | grep -q '"profile": "standard"'
+          node scripts/codex-route.mjs --dry-run --no-record --auto-delegate "Fix typo" | grep -q '"action": "would_delegate"'
+          node scripts/codex-route.mjs --dry-run --no-record --auto-delegate "Fix isolated bug" | grep -q '"action": "orchestrator_continue"'
+      - name: Validate runtime skills and catalog
+        shell: pwsh
+        run: |
+          ./scripts/check-skills.ps1 -Silent
+          ./scripts/check-antigravity-skills.ps1 -Silent
+          git diff --exit-code -- guardrails/system/SKILL_CATALOG.md
+      - name: Validate Claude Code VS Code routing
+        run: |
+          bash scripts/check-claude-routing.sh
+          node -e "JSON.parse(require('fs').readFileSync('.claude/model-routing.json', 'utf8'))"
+      - name: Check scaffold whitespace
+        # Imported skill references intentionally preserve upstream Markdown hard breaks.
+        run: git diff --check $(git hash-object -t tree /dev/null) HEAD -- . ':(exclude).codex/**' ':(exclude).claude/**' ':(exclude).agents/**'

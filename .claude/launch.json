@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lumirace-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "development/lumirace-frontend"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}

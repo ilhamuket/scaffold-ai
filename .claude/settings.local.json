@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc -t markdown \"/Users/uket/Downloads/DB_Design_Sinkronisasi_Pemenuhan_MP_v1_0.docx\")",
+      "Bash(python3 -c \"import docx\")",
+      "Bash(python3 extract_docx.py docx_unpacked/word/document.xml)",
+      "Bash(python3 gen_drawio.py)",
+      "Bash(python3 -c ' *)",
+      "Bash(cp \"/private/tmp/claude-501/-Users-uket-dev-odonplay-agent-scaffold/32425f51-0eed-4cc7-a61d-4b313110ff31/scratchpad/ERD_Sinkronisasi_Pemenuhan_MP.drawio\" \"/Users/uket/Downloads/ERD_Sinkronisasi_Pemenuhan_MP.drawio\")",
+      "Read(//Users/uket/Downloads/**)"
+    ]
+  }
+}

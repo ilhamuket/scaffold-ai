@@ -1,0 +1,71 @@
+# Machine-readable feature and module registry.
+# This file is maintained by memory-curator after intake, impact scan, feature work, QA, and release events.
+
+[metadata]
+module = "feature-registry"
+artifact_type = "memory-feature-registry"
+created_at = "2026-04-26T07:10:04+07:00"
+updated_at = "2026-09-07T00:00:00+07:00"
+runtime = "none"
+owner = "founder"
+status = "active"
+task_id = "none"
+schema_version = "1.0"
+resume_safe = true
+
+[scope]
+target_repo_status = "not_attached"
+feature_discovery_status = "not_started"
+module_discovery_status = "not_started"
+source = "none"
+notes = "Clean template baseline — no target project attached yet."
+
+[allowed_values]
+feature_status = [
+  "discovered",
+  "intake_only",
+  "impact_scanned",
+  "requirements_ready",
+  "design_ready",
+  "architecture_ready",
+  "planned",
+  "in_progress",
+  "blocked",
+  "qa_ready",
+  "qa_failed",
+  "qa_passed",
+  "release_ready",
+  "released",
+  "deprecated",
+  "unknown"
+]
+gate_status = [
+  "blocked",
+  "ready",
+  "in_progress",
+  "passed",
+  "failed",
+  "not_applicable",
+  "unknown"
+]
+risk_level = ["low", "medium", "high", "unknown"]
+
+# No feature entries yet. Add target project entries with this shape after I1/I2:
+#
+# [[features]]
+# id = "FEAT-001"
+# name = "Feature name"
+# type = "feature"
+# status = "impact_scanned"
+# current_gate = "I2"
+# source = "artifacts/improvement/impact-scan.md"
+# last_updated_at = "YYYY-MM-DDTHH:mm:ss+07:00"
+# owner_runtime = "codex"
+# summary = "One sentence summary."
+# impacted_systems = ["frontend", "backend", "database"]
+# depends_on = ["module-or-feature-id"]
+# blocks = ["module-or-feature-id"]
+# related_artifacts = ["path/to/artifact.md"]
+# related_tests = ["path/to/test-or-evidence.md"]
+# risks = ["Known risk"]
+# notes = "Short notes."
